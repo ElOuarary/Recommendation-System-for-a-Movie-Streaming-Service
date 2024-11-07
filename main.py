@@ -17,6 +17,8 @@ print(f"The data types in links.csv: {df_links.dtypes}.\n")
 print(f"The number of axes of links.csv: {df_links.ndim}.\n")
 print(f"The size of links.csv: {df_links.size}.\n")
 print(f"The shape of links.csv: {df_links.shape}.\n") # We could get the shape by multiplying the lenght of rows labes and columns labes
+print(f"The links.csv contains missing values: {not df_links.all().all()}\n")
+print(f"The links.csv contains duplicated values: {df_links.duplicated().all()}\n")
 
 
 # movies.csv info
@@ -30,6 +32,8 @@ print(f"The data types in links.csv: {df_movies.dtypes}.\n")
 print(f"The number of axes of links.csv: {df_movies.ndim}.\n")
 print(f"The size of links.csv: {df_movies.size}.\n")
 print(f"The shape of links.csv: {df_movies.shape}.\n")
+print(f"The links.csv contains missing values: {not df_movies.all().all()}\n")
+print(f"The links.csv contains duplicated values: {df_movies.duplicated().all()}\n")
 
 
 # ratings.csv info
@@ -43,6 +47,8 @@ print(f"The data types in links.csv: {df_ratings.dtypes}.\n")
 print(f"The number of axes of links.csv: {df_ratings.ndim}.\n")
 print(f"The size of links.csv: {df_ratings.size}.\n")
 print(f"The shape of links.csv: {df_ratings.shape}.\n")
+print(f"The links.csv contains missing values: {not df_ratings.all().all()}\n")
+print(f"The links.csv contains duplicated values: {df_ratings.duplicated().all()}\n")
 
 
 # tags.csv info
@@ -56,3 +62,5 @@ print(f"The data types in links.csv: {df_tags.dtypes}.\n")
 print(f"The number of axes of links.csv: {df_tags.ndim}.\n")
 print(f"The size of links.csv: {df_tags.size}.\n")
 print(f"The shape of links.csv: {df_tags.shape}.\n")
+print(f"The links.csv contains missing values: {not df_tags.all().all()}\n")
+print(f"The links.csv contains duplicated values: {df_tags.duplicated().all()}\n")
