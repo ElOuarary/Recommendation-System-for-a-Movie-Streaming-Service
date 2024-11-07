@@ -4,63 +4,25 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-"""Convert each csv file to a DataFrame and retrieve its general information about it"""
+# Define a function to load and inspect a dateset
+def load_and_inspect(file_path: str) -> pd.DataFrame:
+    """Load and inspect the dataset in a csv file"""
+    df = pd.read_csv(file_path)
+    print(f"General info for {file_path.split("/")[-1]}:\n")
+    print(f"Columns: {df.columns.to_list()}")
+    print(f"Data Types:\n{df.dtypes}\n")
+    print(f"Shape: {df.shape}\n")
+    print(f"Missing Values: {not df.notnull().any().any()}\n")
+    print(f"Duplicated Rows: {df.duplicated().any()}\n")
+    print(f"Summary Statictis:\n {df.describe()}\n")
+    return df
 
-# links.csv info
+# Load and inspect each dataset
+datasets = {
+    "links": "ml-latest-small/links.csv",
+    "movies": "ml-latest-small/movies.csv",
+    "ratings": "ml-latest-small/ratings.csv",
+    "tags": "ml-latest-small/tags.csv"
+}
 
-df_links = pd.read_csv("ml-latest-small/links.csv")
-
-print("General Info For links.csv: \n")
-print(f"The row labels of links.csv: {df_links.index}.\n") # We could use df_links.axes to get both row and colums labels
-print(f"The colum labels of links.csv: {df_links.columns}.\n")
-print(f"The data types in links.csv: {df_links.dtypes}.\n")
-print(f"The number of axes of links.csv: {df_links.ndim}.\n")
-print(f"The size of links.csv: {df_links.size}.\n")
-print(f"The shape of links.csv: {df_links.shape}.\n") # We could get the shape by multiplying the lenght of rows labes and columns labes
-print(f"The links.csv contains missing values: {not df_links.all().all()}\n")
-print(f"The links.csv contains duplicated values: {df_links.duplicated().all()}\n")
-
-
-# movies.csv info
-
-df_movies = pd.read_csv("ml-latest-small/movies.csv")
-
-print("General Info For movies.csv: \n")
-print(f"The row labels of links.csv: {df_movies.index}.\n")
-print(f"The colum labels of links.csv: {df_movies.columns}.\n")
-print(f"The data types in links.csv: {df_movies.dtypes}.\n")
-print(f"The number of axes of links.csv: {df_movies.ndim}.\n")
-print(f"The size of links.csv: {df_movies.size}.\n")
-print(f"The shape of links.csv: {df_movies.shape}.\n")
-print(f"The links.csv contains missing values: {not df_movies.all().all()}\n")
-print(f"The links.csv contains duplicated values: {df_movies.duplicated().all()}\n")
-
-
-# ratings.csv info
-
-df_ratings = pd.read_csv("ml-latest-small/ratings.csv")
-
-print("General Info For ratings.csv: \n")
-print(f"The row labels of links.csv: {df_ratings.index}.\n")
-print(f"The colum labels of links.csv: {df_ratings.columns}.\n")
-print(f"The data types in links.csv: {df_ratings.dtypes}.\n")
-print(f"The number of axes of links.csv: {df_ratings.ndim}.\n")
-print(f"The size of links.csv: {df_ratings.size}.\n")
-print(f"The shape of links.csv: {df_ratings.shape}.\n")
-print(f"The links.csv contains missing values: {not df_ratings.all().all()}\n")
-print(f"The links.csv contains duplicated values: {df_ratings.duplicated().all()}\n")
-
-
-# tags.csv info
-
-df_tags = pd.read_csv("ml-latest-small/tags.csv")
-
-print("General Info For ratings.csv: \n")
-print(f"The row labels of links.csv: {df_tags.index}.\n")
-print(f"The colum labels of links.csv: {df_tags.columns}.\n")
-print(f"The data types in links.csv: {df_tags.dtypes}.\n")
-print(f"The number of axes of links.csv: {df_tags.ndim}.\n")
-print(f"The size of links.csv: {df_tags.size}.\n")
-print(f"The shape of links.csv: {df_tags.shape}.\n")
-print(f"The links.csv contains missing values: {not df_tags.all().all()}\n")
-print(f"The links.csv contains duplicated values: {df_tags.duplicated().all()}\n")
+dataframe = {name: load_and_inspect(path) for name, path in datasets.items()}
