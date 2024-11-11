@@ -8,7 +8,8 @@ dtype: object
 INFO: Shape: (9742, 3)
 INFO: Missing Values: False
 INFO: Duplicated Rows: False
-INFO: Summary Statistics:              movieId        imdbId         tmdbId
+INFO: Summary Statistics:
+             movieId        imdbId         tmdbId
 count    9742.000000  9.742000e+03    9734.000000
 mean    42200.353623  6.771839e+05   55162.123793
 std     52160.494854  1.107228e+06   93653.481487
@@ -28,7 +29,8 @@ dtype: object
 INFO: Shape: (9742, 3)
 INFO: Missing Values: False
 INFO: Duplicated Rows: False
-INFO: Summary Statistics:              movieId
+INFO: Summary Statistics:
+             movieId
 count    9742.000000
 mean    42200.353623
 std     52160.494854
@@ -49,7 +51,8 @@ dtype: object
 INFO: Shape: (100836, 4)
 INFO: Missing Values: False
 INFO: Duplicated Rows: False
-INFO: Summary Statistics:               userId        movieId         rating     timestamp
+INFO: Summary Statistics:
+              userId        movieId         rating     timestamp
 count  100836.000000  100836.000000  100836.000000  1.008360e+05
 mean      326.127564   19435.295718       3.501557  1.205946e+09
 std       182.618491   35530.987199       1.042529  2.162610e+08
@@ -70,7 +73,8 @@ dtype: object
 INFO: Shape: (3683, 4)
 INFO: Missing Values: False
 INFO: Duplicated Rows: False
-INFO: Summary Statistics:             userId        movieId     timestamp
+INFO: Summary Statistics:
+            userId        movieId     timestamp
 count  3683.000000    3683.000000  3.683000e+03
 mean    431.149335   27252.013576  1.320032e+09
 std     158.472553   43490.558803  1.721025e+08
