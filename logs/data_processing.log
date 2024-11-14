@@ -84,19 +84,3 @@ min       2.000000       1.000000  1.137179e+09
 75%     477.000000   39263.000000  1.498457e+09
 max     610.000000  193565.000000  1.537099e+09
 
-INFO: The memory usage of links: 0.22MB
-INFO: Memory optimization complete for links.csv.
-INFO: The memory usage of links after optimizating: 0.15MB
-
-INFO: The memory usage of movies: 1.39MB
-INFO: Memory optimization complete for movies.csv.
-INFO: The memory usage of movies after optimizating: 0.87MB
-
-INFO: The memory usage of ratings: 3.08MB
-INFO: Memory optimization complete for ratings.csv.
-INFO: The memory usage of ratings after optimizating: 1.73MB
-
-INFO: The memory usage of tags: 0.29MB
-INFO: Memory optimization complete for tags.csv.
-INFO: The memory usage of tags after optimizating: 0.20MB
-
