@@ -34,8 +34,28 @@ def filter_by_rating(min_rating: float, max_rating: float = 5, inplace = False):
         df = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
         df = df[np.logical_and(df["rating"] >= min_rating, df["rating"] <= max_rating)]
         logger.debug(f"The rating.csv file was filtred")
-        return df.to_csv("data/processed/filtered_ratings.csv")
+        return df.to_csv("data/processed/filtered_by_rating.csv")
+    except ValueError as e:
+        logger.error(f"{e}: the value of one of the parameter caused error.")
+
+
+def filter_by_occurency(column: str ,min_occurence: int = 20, inplace=False):
+    """
+    Filter the users with lower occurency in [1,10]
+    """
+    try:
+        
+        df = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
+        
+        value_counts: pd.Series = df[column].value_counts()
+        mask = value_counts > min_occurence
+        df = df[df[column].isin(mask.index)]
+        return df.to_csv(f"data/processed/filtred_by_{column}_occurence.csv")
     except ValueError as e:
         logger.error(f"{e}: the value of one of the parameter caused error.")
 
 filter_by_rating(3, 5)
+
+filter_by_occurency("userId")
+
+filter_by_occurency("movieId")
