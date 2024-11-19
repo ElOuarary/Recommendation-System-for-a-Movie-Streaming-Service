@@ -31,7 +31,7 @@ def filter_by_rating(min_rating: float, max_rating: float = 5, inplace = False):
     -boolean value that either return a copy of the filtred DataFrame or not, default value is set to False
     """
     try:
-        df = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
+        df: pd.DataFrame = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
         df = df[np.logical_and(df["rating"] >= min_rating, df["rating"] <= max_rating)]
         logger.debug(f"The rating.csv file was filtred")
         return df.to_csv("data/processed/filtered_by_rating.csv")
@@ -45,14 +45,24 @@ def filter_by_occurency(column: str ,min_occurence: int = 20, inplace=False):
     """
     try:
         
-        df = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
-        
+        df: pd.DataFrame = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
+
         value_counts: pd.Series = df[column].value_counts()
         mask = value_counts > min_occurence
-        df = df[df[column].isin(mask.index)]
-        return df.to_csv(f"data/processed/filtred_by_{column}_occurence.csv")
-    except ValueError as e:
-        logger.error(f"{e}: the value of one of the parameter caused error.")
+        filtred_df = df[df[column].isin(mask.index)]
+        
+        logger.info(f"Filtred '{column}' by minimum occurence of {min_occurence}")
+        if filtred_df.empty:
+            logger.warning(f"The Dataframe is empty after filtering")
+        else:
+            logger.info(f"Rows retained after filtering: {len(filtred_df)}")
+
+        filtred_df.to_csv(f"data/processed/filtred_by_{column}_occurence.csv")
+        return filtred_df if not inplace else None
+    except KeyError as e:
+        logger.error(f"Column Error: {e}")
+    except Exception as e:
+        logger.error(f"Unexpected Error: {e}")
 
 filter_by_rating(3, 5)
 
