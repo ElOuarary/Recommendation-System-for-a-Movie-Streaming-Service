@@ -3,15 +3,17 @@ import pandas as pd
 import os
 
 
-# Set up logging configuration
-logging.basicConfig(
-    filename="logs/data_processing.log",
-    filemode="w",
-    format="%(levelname)s: %(message)s",
-    level=logging.INFO
-    )
+# Set up a logger specific to this module
+logger = logging.getLogger("data_loading")
+logger.setLevel(logging.INFO)
+logger.propagate = False
 
-logger = logging.getLogger()
+# Prevent duplicate handlers
+if not logger.hasHandlers():
+    # Set logging handler for this module
+    file_handler = logging.FileHandler("logs/data_laoding.logs")
+    file_handler.setFormatter(logging.Formatter("%(levelname)s: %(name)s"))
+    logger.addHandler(file_handler)
 
 
 # Define a function to load and inspect a dateset in a csv file

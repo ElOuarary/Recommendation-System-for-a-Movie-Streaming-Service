@@ -5,16 +5,18 @@ import logging
 import pandas as pd
 import numpy as np
 
-"""Need to fix this logging arguments values due to a collision with data_processing.log"""
-# Set up logging configuration
-logging.basicConfig(
-    filename="logs/data_filtering.log",
-    filemode="w",
-    format="%(levelname)s: %(message)s",
-    level=logging.DEBUG
-    )
 
-logger = logging.getLogger()
+# Set up a logger specific to this module
+logger = logging.getLogger("data_filtering")
+logger.setLevel(logging.DEBUG)
+logger.propagate = False
+
+# Prevent duplicate handlers
+if not logger.hasHandlers():
+    # Set logging handler for this module
+    file_handler = logging.FileHandler("logs/data_filtering.logs")
+    file_handler.setFormatter(logging.Formatter("%(levelname)s: %(name)s"))
+    logger.addHandler(file_handler)
 
 
 # Create a filert by rating function that filter the movies based on their rating
@@ -63,6 +65,7 @@ def filter_by_occurency(column: str ,min_occurence: int = 20, inplace=False):
         logger.error(f"Column Error: {e}")
     except Exception as e:
         logger.error(f"Unexpected Error: {e}")
+
 
 filter_by_rating(3, 5)
 
