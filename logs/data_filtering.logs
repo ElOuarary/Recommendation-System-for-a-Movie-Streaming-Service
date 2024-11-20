@@ -1,0 +1,5 @@
+DEBUG: The rating.csv file was filtred
+INFO: Filtred 'userId' by minimum occurence of 20
+INFO: Rows retained after filtering: 100836
+INFO: Filtred 'movieId' by minimum occurence of 20
+INFO: Rows retained after filtering: 100836

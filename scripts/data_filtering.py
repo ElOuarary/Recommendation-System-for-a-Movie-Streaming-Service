@@ -22,15 +22,14 @@ if not logger.hasHandlers():
 # Create a filert by rating function that filter the movies based on their rating
 def filter_by_rating(min_rating: float, max_rating: float = 5, inplace = False):
     """Filter the rating csv file based on the rating
+
+    Parameters:
+        min_rating (float): Define the rating on which the filter will start up [min_rating, 5].
+        max_rating (float): Define the rating on which the filter will stop [min_rating, max_rating] to default value is 5.
+        inplace (bool): Whether to modify the 'ratings' DataFrame in place. Default is False.
     
-    min_rating:
-    - Define the rating on which the filter will start up [min_rating, 5]
-
-    max_rating:
-    - Define the rating on which the filter will stop [min_rating, max_rating] to default value is 5
-
-    inplace:
-    -boolean value that either return a copy of the filtred DataFrame or not, default value is set to False
+    Return:
+        pd.DataFrame: The filtered DataFrame (or None if inplace=True).
     """
     try:
         df: pd.DataFrame = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
@@ -43,7 +42,15 @@ def filter_by_rating(min_rating: float, max_rating: float = 5, inplace = False):
 
 def filter_by_occurency(column: str ,min_occurence: int = 20, inplace=False):
     """
-    Filter the users with lower occurency in [1,10]
+    Filter rows in the 'ratings' DataFrame based on the minimum occurrence of unique values in a specified column.
+
+    Parameters:
+        column (str): The column to analyze for occurrences.
+        min_occurence (int, optional): The minimum number of occurrences required to retain a row. Default is 20.
+        inplace (bool, optional): Whether to modify the 'ratings' DataFrame in place. Default is False.
+
+    Return:
+        pd.DataFrame: The filtered DataFrame (or None if inplace=True). 
     """
     try:
         

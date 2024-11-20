@@ -19,10 +19,16 @@ if not logger.hasHandlers():
 # Define a function to load and inspect a dateset in a csv file
 def load_and_inspect(file_path: str) -> pd.DataFrame:
     """
-    Load and inspect the dataset in a csv file
+    Load and inspect the dataset from a csv file.
+
+    Parameters:
+        file_path (str): The path to the csv file to be loaded.
+
+    Returns:
+        pd.DataFrame: The loaded DataFrame.
 
     Logs:
-    - Information about the dataset's columns, data types, shape, missing values, and duplicated rows.
+        Information about the dataset's columns, data types, shape, missing values, and duplicated rows.
     """
     if not os.path.exists(file_path):
         logger.error(f"File {file_path} does not exist.")

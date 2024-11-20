@@ -20,19 +20,13 @@ if not logger.hasHandlers():
 
 # Define a function that optimize the memory usage
 def optimize_memory(name: str, df: pd.DataFrame, inplace: bool = True) -> pd.DataFrame:
-    """Optimize the memory usage of the DataFrame object
+    """Optimize the memory usage of the DataFrame object.
 
-    name:
+    Parameters:
 
-    -name of the file that you will optimize
-
-    df:
-
-    -DataFrame associeted to the file name
-
-    inplace:
-
-    -boolean value that either return a copy of the otptimized DataFrame or not, default value is set to True
+        name(str): name of the file to optimize.
+        df (DataFrame): DataFrame associeted to the file name
+        inplace (bool): Whether to modify the DataFrame in place. Default is False.
     """
     df = df if inplace else df.copy()
     # Optimize the integers and floats colums
