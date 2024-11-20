@@ -15,7 +15,7 @@ logger.propagate = False
 if not logger.hasHandlers():
     # Set logging handler for this module
     file_handler = logging.FileHandler("logs/data_filtering.logs")
-    file_handler.setFormatter(logging.Formatter("%(levelname)s: %(name)s"))
+    file_handler.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
     logger.addHandler(file_handler)
 
 
