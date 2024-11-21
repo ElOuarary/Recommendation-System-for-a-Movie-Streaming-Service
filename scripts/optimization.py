@@ -1,6 +1,6 @@
 # Import the dataframes from the dala_loading file
 from data_loading import dataframes
-# Import the necessary modules
+# Import the necessary modules to optimize the data
 import logging
 import pandas as pd
 

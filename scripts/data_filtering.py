@@ -1,6 +1,6 @@
 # Import the dataframes from the dala_loading file
 from data_loading import dataframes
-# Import the necessary modules
+# Import the necessary modules to filter the data
 import logging
 import pandas as pd
 import numpy as np
@@ -91,10 +91,3 @@ def filter_by_occurency(column: str ,min_occurence: int = 20, inplace=False):
         logger.error(f"Column Error: {e}")
     except Exception as e:
         logger.error(f"Unexpected Error: {e}")
-
-
-filter_by_rating(3, 5)
-
-filter_by_occurency("userId")
-
-filter_by_occurency("movieId")
