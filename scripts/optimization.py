@@ -48,6 +48,7 @@ def optimize_memory(name: str, df: pd.DataFrame, inplace: bool = True) -> pd.Dat
     return df
 
 
+# Log the information about each dataframe memory before and after optimization 
 for name, df in dataframes.items():
     logger.info(f"The memory usage of {name}: {df.memory_usage(deep=True).sum()/1024 ** 2:.2f}MB")
     optimize_memory(name, df)

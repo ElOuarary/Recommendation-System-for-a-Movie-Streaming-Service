@@ -32,12 +32,26 @@ def filter_by_rating(min_rating: float, max_rating: float = 5, inplace = False):
         pd.DataFrame: The filtered DataFrame (or None if inplace=True).
     """
     try:
+        # load the dataframe of rating and either make a copy or view of it based on inplace parameter value
         df: pd.DataFrame = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
-        df = df[np.logical_and(df["rating"] >= min_rating, df["rating"] <= max_rating)]
-        logger.debug(f"The rating.csv file was filtred")
-        return df.to_csv("data/processed/filtered_by_rating.csv")
+        # filter the dataframe based on the specific intervale
+        filtred_df = df[np.logical_and(df["rating"] >= min_rating, df["rating"] <= max_rating)]
+
+        # Log a message based of the filtred dataframe
+        logger.debug(f"The rating.csv file was filtred in the range [{min_rating}, {max_rating}]")
+        if filtred_df.empty:
+            logger.warning(f"The Dataframe is empty after filtering")
+        else:
+            logger.info(f"Rows retained after filtering: {len(filtred_df)}")
+
+        # Load the dataframe into a specific csv file
+        filtred_df.to_csv(f"data/processed/filtred_by_rating.csv")
+        return filtred_df if not inplace else None
+    # Handle different error
     except ValueError as e:
         logger.error(f"{e}: the value of one of the parameter caused error.")
+    except Exception as e:
+        logger.error(f"Unexpected Error: {e}")
 
 
 def filter_by_occurency(column: str ,min_occurence: int = 20, inplace=False):
@@ -53,21 +67,26 @@ def filter_by_occurency(column: str ,min_occurence: int = 20, inplace=False):
         pd.DataFrame: The filtered DataFrame (or None if inplace=True). 
     """
     try:
-        
+        # Load either a copy or a veiw of the ratings dataframe based of the inplace parameter value
         df: pd.DataFrame = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
-
+        
+        # Count the occurency for each value in the specifc column  and create a mask to filter the dataframe
         value_counts: pd.Series = df[column].value_counts()
         mask = value_counts > min_occurence
         filtred_df = df[df[column].isin(mask.index)]
         
+        # Log a message based of the filtred dataframe
         logger.info(f"Filtred '{column}' by minimum occurence of {min_occurence}")
         if filtred_df.empty:
             logger.warning(f"The Dataframe is empty after filtering")
         else:
             logger.info(f"Rows retained after filtering: {len(filtred_df)}")
-
+        
+        # Load the dataframe into a specific csv file
         filtred_df.to_csv(f"data/processed/filtred_by_{column}_occurence.csv")
         return filtred_df if not inplace else None
+    
+    # Handle different error
     except KeyError as e:
         logger.error(f"Column Error: {e}")
     except Exception as e:

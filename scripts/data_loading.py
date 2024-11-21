@@ -33,6 +33,7 @@ def load_and_inspect(file_path: str) -> pd.DataFrame:
     if not os.path.exists(file_path):
         logger.error(f"File {file_path} does not exist.")
         return pd.DataFrame()
+
     df: pd.DataFrame = pd.read_csv(file_path)
 
     logger.info(f"General Information about {file_path.split("/")[-1]}")
