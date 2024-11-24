@@ -37,5 +37,11 @@ for user_idx, movie_idx, rating in zip(user_indices, movie_indices, df["rating"]
 # Step 4: Convert sparse matrix to a dense matrix (optional)
 user_item_dense = user_item_matrix.toarray()
 
-# Output the dense user-item matrix for inspection (optional)
-print(user_item_dense)
+
+# Compute the average of each row without including the NaN values
+row_means = np.nanmean(user_item_dense, axis=1, keepdims=True)
+
+missing_mask = np.isnan(user_item_dense)
+user_item_dense[missing_mask] = np.take(row_means, np.where(missing_mask)[0])
+
+normalized_user_item = user_item_dense - row_means
