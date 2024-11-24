@@ -12,7 +12,7 @@ logger.propagate = False
 # Prevent duplicate handlers
 if not logger.hasHandlers():
     # Set logging handler for this module
-    file_handler = logging.FileHandler("logs/data_laoding.logs")
+    file_handler = logging.FileHandler("logs/data_laoding.txt")
     file_handler.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
     logger.addHandler(file_handler)
 

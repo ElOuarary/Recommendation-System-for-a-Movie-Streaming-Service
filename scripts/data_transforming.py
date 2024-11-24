@@ -4,15 +4,16 @@ import numpy as np
 import pandas as pd
 from scipy.sparse import lil_matrix
 
+
 # Set up a logger specific to this module
-logger = logging.getLogger("data transforming")
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger("data_transforming")
+logger.setLevel(logging.INFO)
 logger.propagate = False
 
 # Prevent duplicate handler
 if not logger.hasHandlers():
     # Set logging handler for this module
-    file_handler = logging.Handler("logs/data_transformed.logs")
+    file_handler = logging.FileHandler("logs/data_transformed.txt")
     file_handler.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
     logger.addHandler(file_handler)
 
@@ -27,7 +28,7 @@ movie_mapping, movie_indices = pd.factorize(df["movieId"])
 num_users = len(user_mapping)
 num_movies = len(movie_mapping)
 
-# Step 2: Initialize a sparse matrix
+# Initialize a sparse matrix
 user_item_matrix = lil_matrix((num_users, num_movies), dtype=np.float32)
 
 # Step 3: Populate the sparse matrix
