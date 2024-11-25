@@ -29,19 +29,20 @@ num_users = user_indices.max()
 num_movies = movie_indices.max()
 
 # Initialize a sparse matrix
-user_item_matrix = lil_matrix((num_users, num_movies), dtype=np.float32)
+user_item_matrix = lil_matrix((num_users, num_movies))
 
 # Step 3: Populate the sparse matrix
 for user_idx, movie_idx, rating in zip(user_mapping, movie_mapping, df["rating"]):
     user_item_matrix[user_idx, movie_idx] = rating
 
-logger.info(user_item_matrix)
+
 # Step 4: Convert sparse matrix to a dense matrix (optional)
 user_item_dense = user_item_matrix.toarray()
 
 
 # Compute the average of each row without including the NaN values
-row_means = np.nanmean(user_item_dense, axis=1, keepdims=True)
+row_means = np.mean(user_item_dense, axis=1, keepdims=True, where=(user_item_dense!=0))
+
 
 missing_mask = np.isnan(user_item_dense)
 user_item_dense[missing_mask] = np.take(row_means, np.where(missing_mask)[0])
