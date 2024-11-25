@@ -25,16 +25,17 @@ user_mapping, user_indices = pd.factorize(df["userId"])
 movie_mapping, movie_indices = pd.factorize(df["movieId"])
 
 # Number of unique users and movies
-num_users = len(user_mapping)
-num_movies = len(movie_mapping)
+num_users = user_indices.max()
+num_movies = movie_indices.max()
 
 # Initialize a sparse matrix
 user_item_matrix = lil_matrix((num_users, num_movies), dtype=np.float32)
 
 # Step 3: Populate the sparse matrix
-for user_idx, movie_idx, rating in zip(user_indices, movie_indices, df["rating"]):
+for user_idx, movie_idx, rating in zip(user_mapping, movie_mapping, df["rating"]):
     user_item_matrix[user_idx, movie_idx] = rating
 
+logger.info(user_item_matrix)
 # Step 4: Convert sparse matrix to a dense matrix (optional)
 user_item_dense = user_item_matrix.toarray()
 
