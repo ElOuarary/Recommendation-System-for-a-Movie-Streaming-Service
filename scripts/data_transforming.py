@@ -2,6 +2,7 @@ from data_loading import dataframes
 import logging
 import numpy as np
 import pandas as pd
+import os
 from scipy.sparse import lil_matrix
 
 
@@ -39,12 +40,13 @@ for user_idx, movie_idx, rating in zip(user_mapping, movie_mapping, df["rating"]
 # Step 4: Convert sparse matrix to a dense matrix (optional)
 user_item_dense = user_item_matrix.toarray()
 
+logger.info(user_item_dense)
 
 # Compute the average of each row without including the NaN values
 row_means = np.mean(user_item_dense, axis=1, keepdims=True, where=(user_item_dense!=0))
-
-
-missing_mask = np.isnan(user_item_dense)
-user_item_dense[missing_mask] = np.take(row_means, np.where(missing_mask)[0])
+logger.info(row_means)
 
 normalized_user_item = user_item_dense - row_means
+logger.info(normalized_user_item)
+
+logger.info(normalized_user_item[normalized_user_item>0])
