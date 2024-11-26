@@ -1,3 +1,8 @@
+"""
+Script: data_transforming.py
+Purpose: Transform rating data into a normalized user-item matrix for recommendation systems.
+"""
+
 from data_loading import dataframes
 import logging
 import numpy as np
@@ -19,34 +24,30 @@ if not logger.hasHandlers():
     logger.addHandler(file_handler)
 
 
-# Create a 2-D matrix full of NaN with the users id are the number of rows and movies id are the number of columns
-df = dataframes["ratings"]
+try:
+    # Data preparation
+    df = dataframes["ratings"]
+    user_mapping, user_indices = pd.factorize(df["userId"])
+    movie_mapping, movie_indices = pd.factorize(df["movieId"])
 
-user_mapping, user_indices = pd.factorize(df["userId"])
-movie_mapping, movie_indices = pd.factorize(df["movieId"])
+    # Get the number of unique users and movies
+    num_users = user_indices.max()
+    num_movies = movie_indices.max()
+    logger.info(f"Number of unique users: {num_users}, Number of unique movies: {num_movies}")
 
-# Number of unique users and movies
-num_users = user_indices.max()
-num_movies = movie_indices.max()
+    # Initialize a sparse matrix and fill it
+    user_item_matrix = lil_matrix((num_users, num_movies))
+    for user_idx, movie_idx, rating in zip(user_mapping, movie_mapping, df["rating"]):
+        user_item_matrix[user_idx, movie_idx] = rating
 
-# Initialize a sparse matrix
-user_item_matrix = lil_matrix((num_users, num_movies))
+    # Normalization the output
+    user_item_dense = user_item_matrix.toarray()
+    row_means = np.mean(user_item_dense, axis=1, keepdims=True, where=(user_item_dense!=0))
+    normalized_user_item = user_item_dense - row_means
+    
+    # Load the output to a csv file if "data/processed"
+    pd.DataFrame(normalized_user_item).to_csv("data/processed/output.csv")
+    logger.info(f"Normalized matrix saved to data/processed/output.csv")
 
-# Step 3: Populate the sparse matrix
-for user_idx, movie_idx, rating in zip(user_mapping, movie_mapping, df["rating"]):
-    user_item_matrix[user_idx, movie_idx] = rating
-
-
-# Step 4: Convert sparse matrix to a dense matrix (optional)
-user_item_dense = user_item_matrix.toarray()
-
-logger.info(user_item_dense)
-
-# Compute the average of each row without including the NaN values
-row_means = np.mean(user_item_dense, axis=1, keepdims=True, where=(user_item_dense!=0))
-logger.info(row_means)
-
-normalized_user_item = user_item_dense - row_means
-logger.info(normalized_user_item)
-
-logger.info(normalized_user_item[normalized_user_item>0])
+except Exception as e:
+    logger.error(f"Error during data transformation: {e}")
