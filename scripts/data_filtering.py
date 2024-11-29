@@ -20,7 +20,7 @@ if not logger.hasHandlers():
 
 
 # Create a filert by rating function that filter the movies based on their rating
-def filter_by_rating(min_rating: float, max_rating: float = 5, inplace = False):
+def filter_by_rating(dataframe: pd.DataFrame, min_rating: float, max_rating: float = 5, inplace = False):
     """Filter the rating csv file based on the rating
 
     Parameters:
@@ -33,7 +33,7 @@ def filter_by_rating(min_rating: float, max_rating: float = 5, inplace = False):
     """
     try:
         # load the dataframe of rating and either make a copy or view of it based on inplace parameter value
-        df: pd.DataFrame = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
+        df: pd.DataFrame = dataframe if inplace else dataframe.copy()
         # filter the dataframe based on the specific intervale
         filtred_df: pd.DataFrame = df[np.logical_and(df["rating"] >= min_rating, df["rating"] <= max_rating)]
 

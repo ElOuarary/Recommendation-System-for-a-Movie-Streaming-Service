@@ -1,0 +1,4 @@
+DEBUG: The rating.csv file was filtred in the range [3, 5]
+INFO: Rows retained after filtering: 81763
+DEBUG: The rating.csv file was filtred in the range [4, 5]
+INFO: Rows retained after filtering: 48580
