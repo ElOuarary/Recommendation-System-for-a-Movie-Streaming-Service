@@ -20,7 +20,7 @@ logger.propagate = False
 # Prevent duplicate handler
 if not logger.hasHandlers():
     # Set logging handler for this module
-    file_handler = logging.FileHandler("logs/data_transformed.txt")
+    file_handler = logging.FileHandler("logs/data_transformed.txt", mode="w")
     file_handler.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
     logger.addHandler(file_handler)
 
