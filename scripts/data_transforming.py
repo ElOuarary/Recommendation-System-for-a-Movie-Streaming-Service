@@ -4,7 +4,7 @@ Purpose: Transform rating data into a normalized user-item matrix for recommenda
 """
 
 from data_loading import dataframes
-from data_filtering import filter_by_rating
+from data_filtering import filter_by_occurency, filter_by_rating
 import logging
 import numpy as np
 import pandas as pd
@@ -28,6 +28,7 @@ if not logger.hasHandlers():
 try:
     # Data preparation
     df: pd.DataFrame = filter_by_rating(dataframes["ratings"], 4)
+    df = filter_by_occurency(df, "userId", 400)
     user_mapping, user_indices = pd.factorize(df["userId"])
     movie_mapping, movie_indices = pd.factorize(df["movieId"])
 

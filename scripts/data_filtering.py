@@ -54,7 +54,7 @@ def filter_by_rating(dataframe: pd.DataFrame, min_rating: float, max_rating: flo
         logger.error(f"Unexpected Error: {e}")
 
 
-def filter_by_occurency(column: str ,min_occurence: int = 20, inplace=False):
+def filter_by_occurency(dataframe: pd.DataFrame, column: str ,min_occurence: int = 20, inplace=False):
     """
     Filter rows in the 'ratings' DataFrame based on the minimum occurrence of unique values in a specified column.
 
@@ -68,7 +68,7 @@ def filter_by_occurency(column: str ,min_occurence: int = 20, inplace=False):
     """
     try:
         # Load either a copy or a veiw of the ratings dataframe based of the inplace parameter value
-        df: pd.DataFrame = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
+        df: pd.DataFrame = dataframe if inplace else dataframe.copy()
         
         # Count the occurency for each value in the specifc column  and create a mask to filter the dataframe
         value_counts: pd.Series = df[column].value_counts()
