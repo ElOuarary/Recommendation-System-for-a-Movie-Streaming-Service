@@ -26,13 +26,13 @@ if not logger.hasHandlers():
 
 try:
     # Data preparation
-    df = dataframes["ratings"]
+    df: pd.DataFrame = dataframes["ratings"]
     user_mapping, user_indices = pd.factorize(df["userId"])
     movie_mapping, movie_indices = pd.factorize(df["movieId"])
 
     # Get the number of unique users and movies
-    num_users = user_indices.max()
-    num_movies = movie_indices.max()
+    num_users: int = user_indices.max()
+    num_movies: int = movie_indices.max()
     logger.info(f"Number of unique users: {num_users}, Number of unique movies: {num_movies}")
 
     # Initialize a sparse matrix and fill it
@@ -43,9 +43,9 @@ try:
     
     # Normalization the output
     user_item_dense = user_item_matrix.toarray()
-    row_means = np.mean(user_item_dense, axis=1, keepdims=True, where=(user_item_dense!=0))
-    rounded_means = np.round(row_means, 2)
-    normalized_user_item = np.subtract(user_item_dense, rounded_means, where=(user_item_dense!=0))
+    row_means: np.ndarray = np.mean(user_item_dense, axis=1, keepdims=True, where=(user_item_dense!=0))
+    rounded_means: np.ndarray = np.round(row_means, 2)
+    normalized_user_item: np.ndarray = np.subtract(user_item_dense, rounded_means, where=(user_item_dense!=0))
     
     # Load the output to a csv file if "data/processed"
     pd.DataFrame(normalized_user_item, dtype=np.float32).to_csv("data/processed/output.csv")

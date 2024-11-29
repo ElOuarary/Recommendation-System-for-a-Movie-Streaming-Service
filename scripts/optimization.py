@@ -28,7 +28,7 @@ def optimize_memory(name: str, df: pd.DataFrame, inplace: bool = True) -> pd.Dat
         df (DataFrame): DataFrame associeted to the file name
         inplace (bool): Whether to modify the DataFrame in place. Default is False.
     """
-    df = df if inplace else df.copy()
+    df: pd.DataFrame = df if inplace else df.copy()
     # Optimize the integers and floats colums
     for col in df.select_dtypes(include=["int", "float"]).columns:
         old_type = df[col].dtype
@@ -38,7 +38,7 @@ def optimize_memory(name: str, df: pd.DataFrame, inplace: bool = True) -> pd.Dat
     # Optimize object columns (strings), especially for categorical data
     for col in df.select_dtypes(include="object").columns:
         num_unique_values = df[col].nunique()
-        num_total_values = len(df[col])
+        num_total_values: int = len(df[col])
         if num_unique_values / num_total_values < 0.5:
             old_dtype = df[col].dtype
             df[col] = df[col].astype("category")

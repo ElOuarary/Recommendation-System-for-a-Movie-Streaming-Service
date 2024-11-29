@@ -35,7 +35,7 @@ def filter_by_rating(min_rating: float, max_rating: float = 5, inplace = False):
         # load the dataframe of rating and either make a copy or view of it based on inplace parameter value
         df: pd.DataFrame = dataframes["ratings"] if inplace else dataframes["ratings"].copy()
         # filter the dataframe based on the specific intervale
-        filtred_df = df[np.logical_and(df["rating"] >= min_rating, df["rating"] <= max_rating)]
+        filtred_df: pd.DataFrame = df[np.logical_and(df["rating"] >= min_rating, df["rating"] <= max_rating)]
 
         # Log a message based of the filtred dataframe
         logger.debug(f"The rating.csv file was filtred in the range [{min_rating}, {max_rating}]")
@@ -72,7 +72,7 @@ def filter_by_occurency(column: str ,min_occurence: int = 20, inplace=False):
         
         # Count the occurency for each value in the specifc column  and create a mask to filter the dataframe
         value_counts: pd.Series = df[column].value_counts()
-        mask = value_counts > min_occurence
+        mask: pd.Series = value_counts > min_occurence
         filtred_df = df[df[column].isin(mask.index)]
         
         # Log a message based of the filtred dataframe
