@@ -8,7 +8,6 @@ from data_filtering import filter_by_occurency, filter_by_rating
 import logging
 import numpy as np
 import pandas as pd
-import os
 from scipy.sparse import lil_matrix
 
 
@@ -45,12 +44,12 @@ try:
     
     # Normalization the output
     user_item_dense = user_item_matrix.toarray()
-    row_means: np.ndarray = np.mean(user_item_dense, axis=1, keepdims=True, where=(user_item_dense!=0))
-    rounded_means: np.ndarray = np.round(row_means, 2)
-    normalized_user_item: np.ndarray = np.subtract(user_item_dense, rounded_means, where=(user_item_dense!=0))
+    user_item_dense = np.where(user_item_dense!=0, user_item_dense, np.nan)
+    row_means: np.ndarray = np.nanmean(user_item_dense, axis=1, keepdims=True)
+    normalized_user_item: np.ndarray = user_item_dense - row_means
     
     # Load the output to a csv file if "data/processed"
-    pd.DataFrame(normalized_user_item, dtype=np.float32).to_csv("data/processed/output.csv")
+    pd.DataFrame(normalized_user_item, dtype=np.float32).to_csv("data/processed/user_item_matrix.csv")
     logger.info(f"Normalized matrix saved to data/processed/output.csv")
 
 except Exception as e:
