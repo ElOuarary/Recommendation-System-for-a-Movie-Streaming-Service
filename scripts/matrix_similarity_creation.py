@@ -22,3 +22,5 @@ if not logger.hasHandlers():
 if not os.path.exists("data/similarity_movie_matrix.csv"):
     logger.info("The user item matrix was not created.")
     sys.exit()
+
+

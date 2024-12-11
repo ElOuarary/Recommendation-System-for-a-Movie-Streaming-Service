@@ -45,9 +45,9 @@ try:
     # Normalization the output
     user_item_dense = user_item_matrix.toarray()
     user_item_dense = np.where(user_item_dense!=0, user_item_dense, np.nan)
-    row_means: np.ndarray = np.nanmean(user_item_dense, axis=1, keepdims=True)
-    normalized_user_item: np.ndarray = user_item_dense - row_means
-    rounded_matrix: np.ndarray = np.round(normalized_user_item)
+    movies_means: np.ndarray = np.nanmean(user_item_dense, axis=0, keepdims=True)
+    normalized_user_item: np.ndarray = user_item_dense - movies_means
+    rounded_matrix: np.ndarray = np.round(normalized_user_item, 2)
     
     # Load the output to a csv file if "data/processed"
     pd.DataFrame(rounded_matrix, dtype=np.float32).to_csv("data/processed/user_item_matrix.csv")
