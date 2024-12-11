@@ -6,14 +6,14 @@ import pandas as pd
 import numpy as np
 
 
-# Set up a logger specific to this module
+# Set up a logger specific to this script
 logger = logging.getLogger("data_filtering")
 logger.setLevel(logging.DEBUG)
 logger.propagate = False
 
 # Prevent duplicate handlers
 if not logger.hasHandlers():
-    # Set logging handler for this module
+    # Set logging handler for this script
     file_handler = logging.FileHandler("logs/data_filtering.txt", mode="w")
     file_handler.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
     logger.addHandler(file_handler)

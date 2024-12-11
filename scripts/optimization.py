@@ -5,14 +5,14 @@ import logging
 import pandas as pd
 
 
-# Set up a logger specific to this module
+# Set up a logger specific to this scirpt
 logger = logging.getLogger("data_optimization")
 logger.setLevel(logging.DEBUG)
 logger.propagate = False
 
 # Prevent duplicate handlers
 if not logger.hasHandlers():
-    # Set logging handler for this module
+    # Set logging handler for this scirpt
     file_handler = logging.FileHandler("logs/data_optimization.txt", mode="w")
     file_handler.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
     logger.addHandler(file_handler)
