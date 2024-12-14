@@ -26,8 +26,8 @@ if not logger.hasHandlers():
 
 try:
     # Data preparation
-    df: pd.DataFrame = filter_by_rating(dataframes["ratings"], 4)
-    df = filter_by_occurency(df, "userId", 400)
+    df: pd.DataFrame = filter_by_rating(dataframes["ratings"], 4, inplace=False)
+    df = filter_by_occurency(df, "userId", 400, inplace=False)
     user_mapping, user_indices = pd.factorize(df["userId"])
     movie_mapping, movie_indices = pd.factorize(df["movieId"])
 
@@ -50,7 +50,7 @@ try:
     rounded_matrix: np.ndarray = np.round(normalized_user_item, 2)
     
     # Load the output to a csv file if "data/processed"
-    pd.DataFrame(rounded_matrix, dtype=np.float32).to_csv("data/processed/user_item_matrix.csv")
+    pd.DataFrame(rounded_matrix, dtype=np.float32).to_excel("data/processed/user_item_matrix.xlsx", index=False)
     logger.info(f"Normalized matrix saved to data/processed/output.csv")
 
 except Exception as e:

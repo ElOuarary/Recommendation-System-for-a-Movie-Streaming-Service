@@ -45,7 +45,7 @@ def filter_by_rating(dataframe: pd.DataFrame, min_rating: float, max_rating: flo
             logger.info(f"Rows retained after filtering: {len(filtred_df)}")
 
         # Load the dataframe into a specific csv file
-        filtred_df.to_csv(f"data/processed/filtred_by_rating.csv")
+        filtred_df.to_excel(f"data/processed/filtred_by_rating.xlsx", index=False)
         return filtred_df if not inplace else None
     # Handle different error
     except ValueError as e:
@@ -83,7 +83,7 @@ def filter_by_occurency(dataframe: pd.DataFrame, column: str ,min_occurence: int
             logger.info(f"Rows retained after filtering: {len(filtred_df)}")
         
         # Load the dataframe into a specific csv file
-        filtred_df.to_csv(f"data/processed/filtred_by_{column}_occurence.csv")
+        filtred_df.to_excel(f"data/processed/filtred_by_{column}_occurence.xlsx", index=False)
         return filtred_df if not inplace else None
     
     # Handle different error
