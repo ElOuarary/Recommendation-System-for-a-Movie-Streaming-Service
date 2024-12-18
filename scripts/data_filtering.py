@@ -100,3 +100,8 @@ def get_average_occurency(dataframe: pd.DataFrame) -> np.int32:
     average_userId_occurency: np.int32 = np.astype(dataframe["userId"].value_counts().mean(), np.int32)
     average_movieId_occurency: np.int32 = np.astype(dataframe["movieId"].value_counts().mean(), np.int32)
     return average_userId_occurency, average_movieId_occurency
+
+
+average_userId_occurency, average_movieId_occurency = get_average_occurency(dataframes["ratings"])
+
+print(average_movieId_occurency, average_userId_occurency)

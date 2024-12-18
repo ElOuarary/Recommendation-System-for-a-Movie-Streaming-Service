@@ -1,4 +1,0 @@
-DEBUG: The rating.csv file was filtred in the range [4, 5]
-INFO: Rows retained after filtering: 48580
-INFO: Filtred 'userId' by minimum occurence of 400
-INFO: Rows retained after filtering: 48580
