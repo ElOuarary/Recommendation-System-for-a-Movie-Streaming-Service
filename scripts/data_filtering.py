@@ -93,8 +93,10 @@ def filter_by_occurency(dataframe: pd.DataFrame, column: str ,min_occurence: int
         logger.error(f"Unexpected Error: {e}")
 
 
-def get_average_occurency(dataframe: pd.DataFrame) -> int:
+def get_average_occurency(dataframe: pd.DataFrame) -> np.int32:
     """
     Get the average occurency for both users that had rated less movies, and movies that where less rated 
     """
-    
+    average_userId_occurency: np.int32 = np.astype(dataframe["userId"].value_counts().mean(), np.int32)
+    average_movieId_occurency: np.int32 = np.astype(dataframe["movieId"].value_counts().mean(), np.int32)
+    return average_userId_occurency, average_movieId_occurency
