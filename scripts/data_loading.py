@@ -43,7 +43,7 @@ def load_and_inspect(file_path: str) -> pd.DataFrame:
     logger.info(f"Shape: {df.shape}")
     logger.info(f"Missing Values: {df.isnull().all().all()}")
     logger.info(f"Duplicated Rows: {df.duplicated().sum()}")
-    logger.info(f"Summary Statistics:\n{df.info()}\n")
+    logger.info(f"Summary Statistics:\n{df.describe()}\n")
     
     return df
 

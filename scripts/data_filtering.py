@@ -91,3 +91,10 @@ def filter_by_occurency(dataframe: pd.DataFrame, column: str ,min_occurence: int
         logger.error(f"Column Error: {e}")
     except Exception as e:
         logger.error(f"Unexpected Error: {e}")
+
+
+def get_average_occurency(dataframe: pd.DataFrame) -> int:
+    """
+    Get the average occurency for both users that had rated less movies, and movies that where less rated 
+    """
+    
