@@ -68,9 +68,11 @@ def filter_by_occurency(dataframe: pd.DataFrame, inplace=False):
     try:
         # Load either a copy or a veiw of the ratings dataframe based of the inplace parameter value
         df: pd.DataFrame = dataframe if inplace else dataframe.copy()
-
+        
+        # Get the average occurence for both userId and movieId in the ratings csv file
         avg_user_occ, avg_movie_occ = get_average_occurency(df)
-        # Count the occurency for each value in the specifc column  and create a mask to filter the dataframe
+
+        # Filter the dataframe based on the occurency for each
         valid_users = df["userId"].value_counts()[lambda x: x > avg_user_occ].index
         valid_movies = df["movieId"].value_counts()[lambda x: x > avg_movie_occ].index
         filtred_df: pd.DataFrame = df[(df["userId"].isin(valid_users)) & (df["movieId"].isin(valid_movies))]

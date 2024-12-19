@@ -1,1 +1,2 @@
-ERROR: Column Error: ('userId', 'movieId')
+INFO: Filtred Completed.
+INFO: Rows retained after filtering: 54469
