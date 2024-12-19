@@ -54,7 +54,7 @@ def filter_by_rating(dataframe: pd.DataFrame, min_rating: float, max_rating: flo
         logger.error(f"Unexpected Error: {e}")
 
 
-def filter_by_occurency(dataframe: pd.DataFrame, column: str ,min_occurence: int = 20, inplace=False):
+def filter_by_occurency(dataframe: pd.DataFrame, inplace=False):
     """
     Filter rows in the 'ratings' DataFrame based on the minimum occurrence of unique values in a specified column.
 
@@ -76,17 +76,17 @@ def filter_by_occurency(dataframe: pd.DataFrame, column: str ,min_occurence: int
         movies_occurency: pd.Series = df["movieId"].value_counts()
         mask_users: pd.Series = users_occurency > average_user_occurency
         mask_movies: pd.Series = movies_occurency > average_movie_occurency
-        filtred_df = df[df[column].isin(mask_users.index & mask_movies.index)]
+        filtred_df = df[df["userId", "movieId"].isin(mask_users.index & mask_movies.index)]
         
         # Log a message based of the filtred dataframe
-        logger.info(f"Filtred '{column}' by minimum occurence of {min_occurence}")
+        logger.info(f"Filtred Completed.")
         if filtred_df.empty:
             logger.warning(f"The Dataframe is empty after filtering")
         else:
             logger.info(f"Rows retained after filtering: {len(filtred_df)}")
         
         # Load the dataframe into a specific csv file
-        filtred_df.to_excel(f"data/processed/filtred_by_{column}_occurence.xlsx", index=False)
+        filtred_df.to_excel(f"data/processed/filtred_by_occurence.xlsx", index=False)
         return filtred_df if not inplace else None
     
     # Handle different error
@@ -103,3 +103,7 @@ def get_average_occurency(dataframe: pd.DataFrame) -> np.int32:
     average_userId_occurency: np.int32 = np.astype(dataframe["userId"].value_counts().mean(), np.int32)
     average_movieId_occurency: np.int32 = np.astype(dataframe["movieId"].value_counts().mean(), np.int32)
     return average_userId_occurency, average_movieId_occurency
+
+
+
+filter_by_occurency(dataframes["ratings"])
