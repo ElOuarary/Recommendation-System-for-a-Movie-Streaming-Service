@@ -69,11 +69,14 @@ def filter_by_occurency(dataframe: pd.DataFrame, column: str ,min_occurence: int
     try:
         # Load either a copy or a veiw of the ratings dataframe based of the inplace parameter value
         df: pd.DataFrame = dataframe if inplace else dataframe.copy()
-        
+
+        average_user_occurency, average_movie_occurency = get_average_occurency(df)
         # Count the occurency for each value in the specifc column  and create a mask to filter the dataframe
-        value_counts: pd.Series = df[column].value_counts()
-        mask: pd.Series = value_counts > min_occurence
-        filtred_df = df[df[column].isin(mask.index)]
+        users_occurency: pd.Series = df["userId"].value_counts()
+        movies_occurency: pd.Series = df["movieId"].value_counts()
+        mask_users: pd.Series = users_occurency > average_user_occurency
+        mask_movies: pd.Series = movies_occurency > average_movie_occurency
+        filtred_df = df[df[column].isin(mask_users.index & mask_movies.index)]
         
         # Log a message based of the filtred dataframe
         logger.info(f"Filtred '{column}' by minimum occurence of {min_occurence}")
@@ -100,8 +103,3 @@ def get_average_occurency(dataframe: pd.DataFrame) -> np.int32:
     average_userId_occurency: np.int32 = np.astype(dataframe["userId"].value_counts().mean(), np.int32)
     average_movieId_occurency: np.int32 = np.astype(dataframe["movieId"].value_counts().mean(), np.int32)
     return average_userId_occurency, average_movieId_occurency
-
-
-average_userId_occurency, average_movieId_occurency = get_average_occurency(dataframes["ratings"])
-
-print(average_movieId_occurency, average_userId_occurency)

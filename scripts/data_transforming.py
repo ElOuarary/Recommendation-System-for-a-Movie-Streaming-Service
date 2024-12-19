@@ -26,7 +26,7 @@ if not logger.hasHandlers():
 
 try:
     # Data preparation
-    df: pd.DataFrame = filter_by_rating(dataframes["ratings"], 4, inplace=False)
+    df: pd.DataFrame = filter_by_rating(dataframes["ratings"], 3, inplace=False)
     df = filter_by_occurency(df, "userId", 400, inplace=False)
     user_mapping, user_indices = pd.factorize(df["userId"])
     movie_mapping, movie_indices = pd.factorize(df["movieId"])
