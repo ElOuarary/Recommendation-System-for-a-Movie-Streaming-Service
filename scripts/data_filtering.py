@@ -59,8 +59,7 @@ def filter_by_occurency(dataframe: pd.DataFrame, inplace=False):
     Filter rows in the 'ratings' DataFrame based on the minimum occurrence of unique values in a specified column.
 
     Parameters:
-        column (str): The column to analyze for occurrences.
-        min_occurence (int, optional): The minimum number of occurrences required to retain a row. Default is 20.
+        dataframe (pd.DataFrame): The input DataFrame.
         inplace (bool, optional): Whether to modify the 'ratings' DataFrame in place. Default is False.
 
     Return:
@@ -70,13 +69,11 @@ def filter_by_occurency(dataframe: pd.DataFrame, inplace=False):
         # Load either a copy or a veiw of the ratings dataframe based of the inplace parameter value
         df: pd.DataFrame = dataframe if inplace else dataframe.copy()
 
-        average_user_occurency, average_movie_occurency = get_average_occurency(df)
+        avg_user_occ, avg_movie_occ = get_average_occurency(df)
         # Count the occurency for each value in the specifc column  and create a mask to filter the dataframe
-        users_occurency: pd.Series = df["userId"].value_counts()
-        movies_occurency: pd.Series = df["movieId"].value_counts()
-        mask_users: pd.Series = users_occurency > average_user_occurency
-        mask_movies: pd.Series = movies_occurency > average_movie_occurency
-        filtred_df = df[df["userId", "movieId"].isin(mask_users.index & mask_movies.index)]
+        valid_users = df["userId"].value_counts()[lambda x: x > avg_user_occ].index
+        valid_movies = df["movieId"].value_counts()[lambda x: x > avg_movie_occ].index
+        filtred_df: pd.DataFrame = df[(df["userId"].isin(valid_users)) & (df["movieId"].isin(valid_movies))]
         
         # Log a message based of the filtred dataframe
         logger.info(f"Filtred Completed.")
@@ -100,8 +97,8 @@ def get_average_occurency(dataframe: pd.DataFrame) -> np.int32:
     """
     Get the average occurency for both users that had rated less movies, and movies that where less rated 
     """
-    average_userId_occurency: np.int32 = np.astype(dataframe["userId"].value_counts().mean(), np.int32)
-    average_movieId_occurency: np.int32 = np.astype(dataframe["movieId"].value_counts().mean(), np.int32)
+    average_userId_occurency: np.int32 = dataframe["userId"].value_counts().mean().astype(np.int32)
+    average_movieId_occurency: np.int32 = dataframe["movieId"].value_counts().mean().astype(np.int32)
     return average_userId_occurency, average_movieId_occurency
 
 
